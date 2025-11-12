@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maulik Baldaniya - Professional Portfolio</title>
+    
+    <style>
+        /* --- Google Fonts Import (for Montserrat and Inter) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap');
+
+        /* --- Global & Theme Setup --- */
+        :root {
+            --bg-color: #0A0A0A;
+            --primary-text: #EAEAEA;
+            --secondary-text: #A0A0A0;
+            --accent-color: #FFFFFF;
+            --highlight-color: #00ADB5;
+            --nav-blur-bg: rgba(20, 20, 20, 0.65);
+            --card-bg: #111111;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            line-height: 1.6;
+            overflow-x: hidden; /* Fixes horizontal scroll */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- 1. Sticky Centered Menu --- */
+        .sticky-nav-header {
+            width: 100%;
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-nav {
+            width: auto;
+            max-width: calc(100% - 40px);
+            background: var(--nav-blur-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 5px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .main-nav ul li a {
+            color: var(--primary-text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 1000;
+            padding: 0.5rem 0.25rem;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .main-nav ul li a:hover {
+            color: var(--secondary-text);
+        }
+
+        /* --- 2. Hero Section --- */
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 100px;
+            padding-bottom: 4rem;
+        }
+
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .hero-section h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 0.5rem 0 1rem;
+            color: var(--primary-text);
+            line-height: 1.1;
+        }
+
+        .hero-section h1 span.highlight {
+            color: var(--highlight-color);
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.4rem;
+            color: var(--secondary-text);
+            font-weight: 400;
+            margin-top: 0;
+            max-width: 600px;
+        }
+
+        /* --- 3. Content Sections (About, Skills, Projects, Contact) --- */
+        .content-section {
+            padding: 6rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        /* ================================== */
+        /* NEW CONNECT SECTION (ICONS & CV) */
+        /* ================================== */
+        #connect {
+            padding: 4rem 0; /* Thodi kam padding */
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem; /* Icons ke beech ka gap */
+            margin-bottom: 3rem; /* Button se pehle space */
+        }
+
+        .social-links a {
+            color: var(--primary-text); /* SVG is color ko use karega */
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--highlight-color); /* Hover par highlight color */
+            transform: translateY(-5px); /* Icon thoda upar uthega */
+        }
+
+        .social-links svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor; /* Yeh important hai */
+        }
+
+        /* --- 3.5 Skills Section (HORIZONTAL SLIDER) --- */
+        
+        @keyframes scroll-horizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .skills-slider-container {
+            overflow: hidden;
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem auto 0;
+            -webkit-mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+        }
+
+        .skills-slide-track {
+            display: flex;
+            width: calc(160px * 10); 
+            animation: scroll-horizontal 25s linear infinite;
+        }
+        
+        .skills-slide-track:hover {
+            animation-play-state: paused;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            border: 0.1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            width: 120px;
+            margin: 0 20px;
+            flex-shrink: 0;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-item svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .skill-item p {
+            margin: 0;
+            font-weight: 500;
+            color: var(--primary-text);
+        }
+
+        /* --- 4. Project Grid --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .project-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--primary-text);
+        }
+
+        /* --- 5. Contact Form --- */
+        #contact {
+            text-align: center;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            color: var(--primary-text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 0 2px rgba(0, 173, 181, 0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: opacity 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            opacity: 0.85;
+        }
+
+        /* --- 6. Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+        .main-footer svg {
+            width: 12px;
+            height:12px;
+            fill: #FFFFFF;
+        }
+        
+        /* --- Mobile Responsive Fixes --- */
+        @media (max-width: 600px) {
+            
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+
+            .hero-section .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .main-nav {
+                padding: 0.5rem 1rem;
+            }
+
+            .main-nav ul {
+                gap: 1rem;
+            }
+
+            .main-nav ul li a {
+                font-size: 0.85rem;
+                padding: 0.25rem 0.1rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-section {
+                padding: 4rem 0;
+            }
+            
+            #connect {
+                padding: 3rem 0;
+            }
+            
+            .social-links {
+                gap: 1.5rem;
+            }
+            
+            .social-links svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header class="sticky-nav-header">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="home" class="hero-section">
+            <div class="container">
+                <img src="mk.jpg" alt="Maulik Baldaniya Profile" class="profile-picture">
+                <h1>Hello, I'm <span class="highlight">Maulik</span> Baldaniya</h1>
+                <p class="subtitle">A Creative Data Analyst & Aisualization</p>
+            </div>
+        </section>
+        
+        <section id="connect">
+            <div class="container">
+                <div class="social-links">
+                    <a href="#" target="_blank" title="GitHub">
+                        <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.475 2 2 6.475 2 12C2 16.425 4.8625 20.1625 8.8375 21.4875C9.3375 21.575 9.525 21.275 9.525 21.0125C9.525 20.775 9.5125 19.9875 9.5125 19.15C7 19.6125 6.35 18.5375 6.15 17.975C6.0375 17.6875 5.55 16.8 5.125 16.5625C4.775 16.375 4.275 15.9125 5.1125 15.9C5.9 15.8875 6.4625 16.625 6.65 16.925C7.55 18.4375 8.9875 18.0125 9.5625 17.75C9.65 17.1 9.9125 16.6625 10.2 16.4125C7.975 16.1625 5.65 15.3 5.65 11.475C5.65 10.3875 6.0375 9.4875 6.675 8.7875C6.575 8.5375 6.225 7.5125 6.775 6.1375C6.775 6.1375 7.6125 5.875 9.525 7.1625C10.325 6.9375 11.175 6.825 12.025 6.825C12.875 6.825 13.725 6.9375 14.525 7.1625C16.4375 5.8625 17.275 6.1375 17.275 6.1375C17.825 7.5125 17.475 8.5375 17.375 8.7875C18.0125 9.4875 18.4 10.375 18.4 11.475C18.4 15.3125 16.0625 16.1625 13.8375 16.4125C14.2 16.725 14.5125 17.325 14.5125 18.2625C14.5125 19.6 14.5 20.675 14.5 21.0125C14.5 21.275 14.6875 21.5875 15.1875 21.4875C17.1727 20.8173 18.8977 19.5415 20.1198 17.8395C21.3419 16.1376 21.9995 14.0953 22 12C22 6.475 17.525 2 12 2Z" fill="#ffffff" />
+</svg>
+                    </a>
+                    <a href="#" target="_blank" title="LinkedIn">
+                        <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="-143 145 512 512" xml:space="preserve">
+<path d="M113,145c-141.4,0-256,114.6-256,256s114.6,256,256,256s256-114.6,256-256S254.4,145,113,145z M41.4,508.1H-8.5V348.4h49.9
+	V508.1z M15.1,328.4h-0.4c-18.1,0-29.8-12.2-29.8-27.7c0-15.8,12.1-27.7,30.5-27.7c18.4,0,29.7,11.9,30.1,27.7
+	C45.6,316.1,33.9,328.4,15.1,328.4z M241,508.1h-56.6v-82.6c0-21.6-8.8-36.4-28.3-36.4c-14.9,0-23.2,10-27,19.6
+	c-1.4,3.4-1.2,8.2-1.2,13.1v86.3H71.8c0,0,0.7-146.4,0-159.7h56.1v25.1c3.3-11,21.2-26.6,49.8-26.6c35.5,0,63.3,23,63.3,72.4V508.1z
+	"/>
+</svg>
+                    </a>
+                    <a href="#" target="_blank" title="Behance">
+                        <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512" xml:space="preserve">
+<g>
+	<path d="M344.1,244.5c-4.9-4.2-11-6.3-18.2-6.3c-7.8,0-13.9,2.2-18.3,6.7c-4.3,4.5-7,10.5-8.2,18.1h52.7
+		C351.7,254.9,348.9,248.8,344.1,244.5z"/>
+	<path d="M214.3,266.1c-3.8-1.7-9-2.6-15.8-2.7h-39v42.2H198c6.9,0,12.2-0.9,16-2.8c7-3.5,10.4-10,10.4-19.7
+		C224.4,274.9,221,269.2,214.3,266.1z"/>
+	<path d="M256,0C114.6,0,0,114.6,0,256s114.6,256,256,256s256-114.6,256-256S397.4,0,256,0z M291.6,182.3h67.8V202h-67.8
+		L291.6,182.3L291.6,182.3z M250.7,310.6c-3,4.9-6.7,9.1-11.2,12.4c-5,3.9-11,6.5-17.9,8c-6.9,1.4-14.3,2.1-22.4,2.1H128V174.9h76.5
+		c19.3,0.3,33,5.9,41,16.9c4.8,6.7,7.2,14.8,7.2,24.2c0,9.6-2.4,17.4-7.3,23.3c-2.7,3.3-6.8,6.3-12.1,9c8.1,3,14.2,7.6,18.3,14
+		s6.2,14.1,6.2,23.2C257.8,294.7,255.4,303.1,250.7,310.6z M384,283.2h-85.2c0.5,11.7,4.5,20,12.2,24.7c4.7,2.9,10.3,4.4,16.9,4.4
+		c6.9,0,12.6-1.8,17-5.4c2.4-1.9,4.5-4.6,6.3-8.1h31.2c-0.8,6.9-4.6,14-11.3,21.2c-10.5,11.4-25.1,17.1-44,17.1
+		c-15.6,0-29.3-4.8-41.2-14.4c-11.9-9.6-17.9-25.2-17.9-46.8c0-20.3,5.4-35.8,16.1-46.6c10.8-10.8,24.7-16.2,41.8-16.2
+		c10.2,0,19.4,1.8,27.5,5.5c8.2,3.6,14.9,9.4,20.2,17.3c4.8,6.9,7.9,15,9.3,24.2C383.8,265.4,384.1,273.1,384,283.2z"/>
+	<path d="M214.8,233.3c4.3-2.6,6.4-7.3,6.4-13.9c0-7.4-2.8-12.2-8.5-14.6c-4.9-1.6-11.1-2.5-18.7-2.5h-34.4v34.9H198
+		C204.9,237.3,210.4,236,214.8,233.3z"/>
+</g>
+</svg>
+                    </a>
+                    <a href="#" target="_blank" title="Instagram">
+                        <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <g>
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path fill-rule="nonzero" d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
+    </g>
+</svg>
+                    </a>
+                </div>
+                
+                <a href="Maulik_Baldaniya_CV.pdf" class="cta-button" download>Download CV</a>
+            </div>
+        </section>
+        
+        <section id="about" class="content-section">
+            <div class="container">
+                <h2>About Me</h2>
+                <p>Welcome to my portfolio. I am passionate about creating clean, modern, and structural designs that are not only beautiful but also highly functional. With a strong background in web development and design, I strive to push boundaries and deliver exceptional results.</p>
+                <p>My expertise includes UI/UX design, front-end development, and visual branding, always with a focus on delivering intuitive and engaging user experiences.</p>
+            </div>
+        </section>
+        
+        <section id="skills" class="content-section">
+            <div class="container">
+                <h2>My Skills</h2>
+                <div class="skills-slider-container">
+                    <div class="skills-slide-track">
+                        
+                        <div class="skill-item">
+                            <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 -0.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <defs>
+        <linearGradient x1="12.9593594%" y1="12.0393928%" x2="79.6388325%" y2="78.2008538%" id="linearGradient-1">
+            <stop stop-color="#387EB8" offset="0%">
+                
+            </stop>
+            <stop stop-color="#366994" offset="100%">
+                
+            </stop>
+        </linearGradient>
+        <linearGradient x1="19.127525%" y1="20.5791813%" x2="90.7415328%" y2="88.4290372%" id="linearGradient-2">
+            <stop stop-color="#FFE052" offset="0%">
+                
+            </stop>
+            <stop stop-color="#FFC331" offset="100%">
+                
+            </stop>
+        </linearGradient>
+    </defs>
+    <g>
+        <path d="M126.915866,0.0722755491 C62.0835831,0.0722801733 66.1321288,28.1874648 66.1321288,28.1874648 L66.2044043,57.3145115 L128.072276,57.3145115 L128.072276,66.0598532 L41.6307171,66.0598532 C41.6307171,66.0598532 0.144551098,61.3549438 0.144551098,126.771315 C0.144546474,192.187673 36.3546019,189.867871 36.3546019,189.867871 L57.9649915,189.867871 L57.9649915,159.51214 C57.9649915,159.51214 56.8001363,123.302089 93.5968379,123.302089 L154.95878,123.302089 C154.95878,123.302089 189.434218,123.859386 189.434218,89.9830604 L189.434218,33.9695088 C189.434218,33.9695041 194.668541,0.0722755491 126.915866,0.0722755491 L126.915866,0.0722755491 L126.915866,0.0722755491 Z M92.8018069,19.6589497 C98.9572068,19.6589452 103.932242,24.6339846 103.932242,30.7893845 C103.932246,36.9447844 98.9572068,41.9198193 92.8018069,41.9198193 C86.646407,41.9198239 81.6713721,36.9447844 81.6713721,30.7893845 C81.6713674,24.6339846 86.646407,19.6589497 92.8018069,19.6589497 L92.8018069,19.6589497 L92.8018069,19.6589497 Z" fill="url(#linearGradient-1)">
+            
+        </path>
+        <path d="M128.757101,254.126271 C193.589403,254.126271 189.540839,226.011081 189.540839,226.011081 L189.468564,196.884035 L127.600692,196.884035 L127.600692,188.138693 L214.042251,188.138693 C214.042251,188.138693 255.528417,192.843589 255.528417,127.427208 C255.52844,62.0108566 219.318366,64.3306589 219.318366,64.3306589 L197.707976,64.3306589 L197.707976,94.6863832 C197.707976,94.6863832 198.87285,130.896434 162.07613,130.896434 L100.714182,130.896434 C100.714182,130.896434 66.238745,130.339138 66.238745,164.215486 L66.238745,220.229038 C66.238745,220.229038 61.0044225,254.126271 128.757101,254.126271 L128.757101,254.126271 L128.757101,254.126271 Z M162.87116,234.539597 C156.715759,234.539597 151.740726,229.564564 151.740726,223.409162 C151.740726,217.253759 156.715759,212.278727 162.87116,212.278727 C169.026563,212.278727 174.001595,217.253759 174.001595,223.409162 C174.001618,229.564564 169.026563,234.539597 162.87116,234.539597 L162.87116,234.539597 L162.87116,234.539597 Z" fill="url(#linearGradient-2)">
+            
+        </path>
+    </g>
+</svg>
+                            <p>Python</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <polygon fill="#00acc1" points="21.196,12.276 14.392,8.842 6.922,12.569 13.912,16.078"></polygon><polygon fill="#00acc1" points="24.317,13.85 31.451,17.453 24.049,21.169 17.049,17.654"></polygon><polygon fill="#00acc1" points="33.846,8.893 41.176,12.569 34.619,15.86 27.47,12.254"></polygon><polygon fill="#00acc1" points="30.69,7.31 24.091,4 17.564,7.258 24.364,10.687"></polygon><polygon fill="#00acc1" points="25.532,35.725 25.532,44.73 33.525,40.74 33.518,31.732"></polygon><polygon fill="#00acc1" points="33.514,28.587 33.505,19.674 25.532,23.637 25.532,32.554"></polygon><polygon fill="#00acc1" points="43.111,26.918 43.111,35.957 36.292,39.359 36.287,30.361"></polygon><polygon fill="#00acc1" points="43.111,23.756 43.111,14.898 36.279,18.294 36.285,27.225"></polygon><path fill="#448aff" d="M22.71,23.637l-5.384-2.708v11.699c0,0-6.586-14.012-7.195-15.27 c-0.079-0.163-0.401-0.341-0.484-0.385C8.46,16.353,5,14.601,5,14.601v20.676l4.787,2.566V27.031c0,0,6.515,12.52,6.582,12.657 s0.718,1.455,1.418,1.919c0.929,0.618,4.919,3.016,4.919,3.016L22.71,23.637z"></path>
+                            </svg>
+                            <p>NumPy</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <rect width="5" height="10" x="18" y="4" fill="#1a237e"></rect><rect width="5" height="10" x="18" y="25" fill="#1a237e"></rect><rect width="5" height="5" x="18" y="17" fill="#fbc02d"></rect><rect width="5" height="33" x="10" y="13" fill="#1a237e"></rect><rect width="5" height="10" x="26" y="33" fill="#1a237e"></rect><rect width="5" height="10" x="26" y="12" fill="#1a237e"></rect><rect width="5" height="5" x="26" y="25" fill="#ff4081"></rect><rect width="5" height="33" x="34" y="2" fill="#1a237e"></rect>
+                            </svg>
+                            <p>Pandas</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <path fill="#eda503" d="M38,44H26c-0.552,0-1-0.448-1-1V5c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v38	C39,43.552,38.552,44,38,44z"></path><path fill="#ffca28" d="M30,44H18c-0.552,0-1-0.448-1-1V15c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v28	C31,43.552,30.552,44,30,44z"></path><path fill="#ffe082" d="M22,44H10c-0.552,0-1-0.448-1-1V25c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v18	C23,43.552,22.552,44,22,44z"></path>
+                            </svg>
+                            <p>Power BI</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path><path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path><path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path><path fill="#17472a" d="M14 24.005H29V33.055H14z"></path><g><path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"></path><path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path><path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path><path fill="#129652" d="M29 24.005H44V33.055H29z"></path></g><path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path><path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>
+                            </svg>
+                            <p>Excel</p>
+                        </div>
+
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <path fill="#0277BD" d="M24.047,5c-1.555,0.005-2.633,0.142-3.936,0.367c-3.848,0.67-4.549,2.077-4.549,4.67V14h9v2H15.22h-4.35c-2.636,0-4.943,1.242-5.674,4.219c-0.826,3.417-0.863,5.557,0,9.125C5.851,32.005,7.294,34,9.931,34h3.632v-5.104c0-2.966,2.686-5.896,5.764-5.896h7.236c2.523,0,5-1.862,5-4.377v-8.586c0-2.439-1.759-4.263-4.218-4.672C27.406,5.359,25.589,4.994,24.047,5z M19.063,9c0.821,0,1.5,0.677,1.5,1.502c0,0.833-0.679,1.498-1.5,1.498c-0.837,0-1.5-0.664-1.5-1.498C17.563,9.68,18.226,9,19.063,9z"></path><path fill="#FFC107" d="M23.078,43c1.555-0.005,2.633-0.142,3.936-0.367c3.848-0.67,4.549-2.077,4.549-4.67V34h-9v-2h9.343h4.35c2.636,0,4.943-1.242,5.674-4.219c0.826-3.417,0.863-5.557,0-9.125C41.274,15.995,39.831,14,37.194,14h-3.632v5.104c0,2.966-2.686,5.896-5.764-5.896h-7.236c-2.523,0-5,1.862-5,4.377v8.586c0,2.439,1.759,4.263,4.218,4.672C19.719,42.641,21.536,43.006,23.078,43z M28.063,39c-0.821,0-1.5-0.677-1.5-1.502c0-0.833,0.679-1.498,1.5-1.498c0.837,0,1.5,0.664,1.5,1.498C29.563,38.32,28.899,39,28.063,39z"></path>
+                            </svg>
+                            <p>Python</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <polygon fill="#00acc1" points="21.196,12.276 14.392,8.842 6.922,12.569 13.912,16.078"></polygon><polygon fill="#00acc1" points="24.317,13.85 31.451,17.453 24.049,21.169 17.049,17.654"></polygon><polygon fill="#00acc1" points="33.846,8.893 41.176,12.569 34.619,15.86 27.47,12.254"></polygon><polygon fill="#00acc1" points="30.69,7.31 24.091,4 17.564,7.258 24.364,10.687"></polygon><polygon fill="#00acc1" points="25.532,35.725 25.532,44.73 33.525,40.74 33.518,31.732"></polygon><polygon fill="#00acc1" points="33.514,28.587 33.505,19.674 25.532,23.637 25.532,32.554"></polygon><polygon fill="#00acc1" points="43.111,26.918 43.111,35.957 36.292,39.359 36.287,30.361"></polygon><polygon fill="#00acc1" points="43.111,23.756 43.111,14.898 36.279,18.294 36.285,27.225"></polygon><path fill="#448aff" d="M22.71,23.637l-5.384-2.708v11.699c0,0-6.586-14.012-7.195-15.27 c-0.079-0.163-0.401-0.341-0.484-0.385C8.46,16.353,5,14.601,5,14.601v20.676l4.787,2.566V27.031c0,0,6.515,12.52,6.582,12.657 s0.718,1.455,1.418,1.919c0.929,0.618,4.919,3.016,4.919,3.016L22.71,23.637z"></path>
+                            </svg>
+                            <p>NumPy</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <rect width="5" height="10" x="18" y="4" fill="#1a237e"></rect><rect width="5" height="10" x="18" y="25" fill="#1a237e"></rect><rect width="5" height="5" x="18" y="17" fill="#fbc02d"></rect><rect width="5" height="33" x="10" y="13" fill="#1a237e"></rect><rect width="5" height="10" x="26" y="33" fill="#1a237e"></rect><rect width="5" height="10" x="26" y="12" fill="#1a237e"></rect><rect width="5" height="5" x="26" y="25" fill="#ff4081"></rect><rect width="5" height="33" x="34" y="2" fill="#1a237e"></rect>
+                            </svg>
+                            <p>Pandas</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <path fill="#eda503" d="M38,44H26c-0.552,0-1-0.448-1-1V5c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v38	C39,43.552,38.552,44,38,44z"></path><path fill="#ffca28" d="M30,44H18c-0.552,0-1-0.448-1-1V15c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v28	C31,43.552,30.552,44,30,44z"></path><path fill="#ffe082" d="M22,44H10c-0.552,0-1-0.448-1-1V25c0-0.552,0.448-1,1-1h12c0.552,0,1,0.448,1,1v18	C23,43.552,22.552,44,22,44z"></path>
+                            </svg>
+                            <p>Power BI</p>
+                        </div>
+                        <div class="skill-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                            <path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path><path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path><path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path><path fill="#17472a" d="M14 24.005H29V33.055H14z"></path><g><path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"></path><path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path><path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path><path fill="#129652" d="M29 24.005H44V33.055H29z"></path></g><path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path><path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>
+                            </svg>
+                            <p>Excel</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <div class="container">
+                <h2>My Projects</h2>
+                <div class="project-grid">
+                    
+                    <div class="project-card">
+                        <a href="project1.html" target="_blank">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzEyODZ8MHwxfGFsbHx8fHx8fHx8fDE3MTUyMzkxMDh8&ixlib=rb-4.0.3&q=80&w=800" alt="Project 1 Image" class="project-image">
+                            <div class="project-info">
+                                <h3>Shopmarts E-commerce</h3>
+                                <p>Designed and developed a responsive e-commerce platform focusing on intuitive user experience and clean aesthetics. </p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="project-card">
+                        <a href="project2.html" target="_blank">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzEyODZ8MHwxfGFsbHx8fHx8fHx8fDE3MTUyMzkxMDh8&ixlib=rb-4.0.3&q=80&w=800" alt="Project 2 Image" class="project-image">
+                            <div class="project-info">
+                                <h3>Branding Reimagined</h3>
+                                <p>Led a complete brand identity overhaul for a startup, including logo design, color palette, and typography guidelines.</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card">
+                        <a href="project3.html" target="_blank">
+                            <img src="httpsww.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzEyODZ8MHwxfGFsbHx8fHx8fHx8fDE3MTUyMzkxMDh8&ixlib=rb-4.0.3&q=80&w=800" alt="Project 3 Image" class="project-image">
+                            <div class="project-info">
+                                <h3>Data Analysis Dashboard</h3>
+                                <p>Built an interactive dashboard using Power BI and Python (Pandas, NumPy) to analyze sales data and visualize key trends.</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="project-card">
+                        <a href="project4.html" target="_blank">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzEyODZ8MHwxfGFsbHx8fHx8fHx8fDE3MTUyMzkxMDh8&ixlib=rb-4.0.3&q=80&w=800" alt="Project 4 Image" class="project-image">
+                            <div class="project-info">
+                                <h3>Mobile App UI</h3>
+                                <p>Crafted the user interface for a productivity mobile application, optimizing for clarity and ease of use across iOS and Android.</p>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                
+                <form action="https://formsubmit.co/your.email@example.com" method="POST" class="contact-form">
+
+                    <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                    <input type="hidden" name="_captcha" value="false">
+
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group"> 
+                        <textarea name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="cta-button">Send Message</button>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>Made with ❤️ by Maulik Baldaniya <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="verified">
+  <path d="M22.51 13.76a3 3 0 0 1 0-3.52l.76-1.05a1 1 0 0 0 .14-.9 1.018 1.018 0 0 0-.64-.64l-1.23-.4a2.987 2.987 0 0 1-2.07-2.85V3.1a1 1 0 0 0-1.31-.95l-1.24.4a3 3 0 0 1-3.35-1.09L12.81.41a1.036 1.036 0 0 0-1.62 0l-.76 1.05a3 3 0 0 1-3.35 1.09l-1.24-.4a1 1 0 0 0-1.31.95v1.3a2.987 2.987 0 0 1-2.07 2.85l-1.23.4a1.018 1.018 0 0 0-.64.64 1 1 0 0 0 .14.9l.76 1.05a3 3 0 0 1 0 3.52l-.76 1.05a1 1 0 0 0-.14.9 1.018 1.018 0 0 0 .64.64l1.23.4a2.987 2.987 0 0 1 2.07 2.85v1.3a1 1 0 0 0 1.31.95l1.23-.4a2.994 2.994 0 0 1 3.36 1.09l.76 1.05a1.005 1.005 0 0 0 1.62 0l.76-1.05a3 3 0 0 1 3.36-1.09l1.23.4a1 1 0 0 0 1.31-.95v-1.3a2.987 2.987 0 0 1 2.07-2.85l1.23-.4a1.018 1.018 0 0 0 .64-.64 1 1 0 0 0-.14-.9Zm-5.8-3.053-5 5a1 1 0 0 1-1.414 0l-3-3a1 1 0 1 1 1.414-1.414L11 13.586l4.293-4.293a1 1 0 0 1 1.414 1.414Z"></path>
+</svg></p>
+    </footer>
+
+</body>
+</html>
